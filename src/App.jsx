@@ -1,13 +1,16 @@
 import Sidebar from "./Sidebar";
 import Timeline from "./components/Timeline";
-const app = () => {
-  return(
-    <div>
+import Suggestion from "./components/Suggestion";
+import './App.css'; 
+
+const App = () => {
+  return (
+    <div className="zennbu">
       <Sidebar />
       <Timeline />
-      {/* <suggestion /> */}
+      <Suggestion />
     </div>
   );
 };
 
-export default app;
+export default App;
