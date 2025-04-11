@@ -1,14 +1,5 @@
 .zennbu{
     display: flex;
-    /* justify-content: space-between; */
-    /* gap: 20px; */
 }
+   
 
-.suggestion{ 
-    background-color: red
-}
-
-.timeline{
-    width: 600px;
-    background-color: yellow;
-}

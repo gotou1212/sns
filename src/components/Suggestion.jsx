@@ -1,6 +1,8 @@
+import './Suggestion.css'
+
 export const Suggestion = () => {
     return(
-        <div>suggestion</div>
+        <div className="suggestion">suggestion</div>
     )
 }
 

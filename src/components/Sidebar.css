@@ -1,4 +1,16 @@
+
 .sidebar{
-    background-color:green;
-    width: 400px
+    background-color: green;
+    width: 400px;
+    height: 100vh;
+    flex-direction: column;
+    display: flex;
+}
+
+.button1{    
+    width: 20%;       
+}
+  
+.button2{
+    width: 20%;
 }

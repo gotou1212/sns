@@ -7,12 +7,8 @@ const App = () => {
   return (
     <div className="zennbu">
       <Sidebar />
-      <div className="timeline">
-        <Timeline />
-      </div>
-      <div className="suggestion">
-        <Suggestion/>
-      </div>
+      <Timeline />
+      <Suggestion />
     </div>
   );
 };

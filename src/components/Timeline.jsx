@@ -1,7 +1,9 @@
+import './Timeline.css'
+
 export const Timeline = () => {
     return(
-        <div>timeline</div>
-    )
+        <div className="timeline">timeline</div>
+    );
 }
 
 export default Timeline;
