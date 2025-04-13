@@ -2,4 +2,33 @@
 .suggestion{ 
     background-color: red;
     height: 100vh;
+    flex-grow: 1;
+    flex-direction: column;
+    display: flex;
+    padding: 12px;
+}
+
+.kennsaku{
+    width: 60%;
+    border-radius: 20px;
+    padding: 8px;
+}
+
+.kounyuu{
+    
+}
+
+.kounyuubotann{
+color: white;
+background-color: skyblue;
+padding: 8px;
+border-radius: 10px;
+}
+
+.hutomozi{
+    font-size: 20px;
+}
+
+.kae{
+    font-size: 10px;
 }

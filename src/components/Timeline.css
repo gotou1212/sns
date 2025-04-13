@@ -1,6 +1,6 @@
 
 .timeline{
-    width: 600px;
+    flex-grow: 2;
     background-color: yellow;
     height: 100vh;
 }
