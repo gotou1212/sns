@@ -1,5 +1,10 @@
 
 .timeline{
+    background-color: white;
+}
+
+.kakoi{
     flex-grow: 2;
-    background-color: yellow;
+    border-left:1px solid #d3d1cb;
+    border-right:1px solid #d3d1cb;
 }

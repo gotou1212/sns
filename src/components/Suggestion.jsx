@@ -11,6 +11,9 @@ export const Suggestion = () => {
                     onClick={() => window.open("https://www.google.com/webhp?hl=ja&ictx=0&sa=X&ved=0ahUKEwjtvf-Kht6MAxWGh1YBHXZ2DUcQpYkNCAs","_blank")}>
                     購入する
                 </button>
+                <a href="https://www.google.com/webhp?hl=ja&ictx=0&sa=X&ved=0ahUKEwjtvf-Kht6MAxWGh1YBHXZ2DUcQpYkNCAs" className="s" target="_blank">
+                  購入
+                </a>
             </div>  
             <div className="a">
                 <h1>今何してる？</h1>
