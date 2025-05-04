@@ -1,7 +1,7 @@
 
 .suggestion{ 
     background-color: red;
-    flex-grow: 1;
+    flex-grow: 2;
     flex-direction: column;
     display: flex;
     padding: 12px;
@@ -26,6 +26,7 @@ color: white;
 background-color: skyblue;
 padding: 8px;
 border-radius: 10px;
+cursor: pointer;
 }
 
 .hutomozi{
