@@ -26,7 +26,7 @@
   height:20%;
   box-sizing: border-box;
   border: none;
-  background-color: aliceblue;
+  background-color:aliceblue;
   outline: none;
 }
 
@@ -43,4 +43,21 @@
   cursor: pointer;
 }
 
+.kakoi3{
+  border: 4px solid #d3d1cb;
+}
 
+.buttons{
+display:grid;
+grid-template-columns: repeat(5,1fr);
+gap:20px;
+flex-grow:1
+}
+
+.site{
+display: flex;
+}
+
+.button56{
+right: 1000000px;
+}
