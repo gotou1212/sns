@@ -14,14 +14,14 @@ export const Timeline = () => {
             <h3>uaa</h3>
             <div className="site">
             <div className='buttons'>
-            <button1>1</button1>
-            <button2>2</button2>
-            <button3>3</button3>
-            <button4>4</button4>
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>4</button>
             </div>
             <div className="button56">
-            <button5>5</button5>
-            <button6>6</button6>
+            <button>5</button>
+            <button>6</button>
             </div>
             </div>
             </div>
