@@ -6,6 +6,7 @@
     display: flex;
     padding: 12px;
     max-width: 300px;
+    height: 868px;
 }
 
 .kennsaku{
@@ -22,11 +23,12 @@
 }
 
 .hutomozi{
-    font-size: 30px;
+    font-size: 20px;
 }
 
 .kae{
     font-size: 20px;
+    color: red;
 }
 
 .a{
@@ -38,5 +40,8 @@
 }
 
 .s{
+    padding: 5px;
+    border:5px double #d3d1cb;
     text-decoration:none;
 }
+

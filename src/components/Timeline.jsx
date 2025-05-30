@@ -30,13 +30,13 @@ export const Timeline = () => {
           <div className="post-content-image">image</div>
           <div className="post-content-buttons">
            <div className="left">
-            <div className="button1">
-            <button>1</button>
+            <div className="koko">
+              <button>1</button>
             </div>
-            <div className="button2">
+            <div className="2">
             <button>2</button>
             </div>
-            <div className="button3">
+            <div className="3">
             <button>3</button>
             </div>
             <div className="4">
