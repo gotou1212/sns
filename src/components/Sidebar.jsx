@@ -1,11 +1,32 @@
 import './Sidebar.css'
-
+import { HomeButton } from './HomeButton';
+import {SearchButton} from './SearchButton';
+import {NotificationButton} from './NotificationButton';
+import { MailButton } from './MailButton';
+import { GrokButton } from './GrokButton';
+import { BookmarkButton } from './BookmarkButton';
+import { RecruitmentButton } from './Recruitment';
+import { CommunityButton } from './CommunityButton';
+import { PremiumButton } from './PremiumButton';
+import { VerifiedorganizationButton } from './VerifiedorganizationButton';
+import { ProfileButton } from './ProfileButton';
+import { SeemoreButton } from './SeemoreButton';
 const Sidebar = () => {
     return(
-          <div className="sidebar">sidebar
-            <button className="button1">1</button>
-            <button className="button2">2</button>  
-            </div>
+          <div className='sidebar'>
+            <HomeButton />
+            <SearchButton />
+            <NotificationButton />
+            <MailButton />
+            <GrokButton />
+            <BookmarkButton />
+            <RecruitmentButton />
+            <CommunityButton />
+            <PremiumButton />
+            <VerifiedorganizationButton />
+            <ProfileButton />
+            <SeemoreButton />
+          </div>
     );
 }
 
