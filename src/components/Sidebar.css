@@ -6,6 +6,7 @@
     width:300px;
     display:flex;
     flex-direction:column;
+    padding:10px;
 }
 
   
@@ -13,6 +14,9 @@
    width:30px;
 }
 
+.profile{
+    height:35px;
+}
 
 
 

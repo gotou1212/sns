@@ -2,6 +2,6 @@ import React from 'react'
 import { CgMoreVerticalO } from "react-icons/cg";
 export const SeemoreButton = () => {
   return (
-    <CgMoreVerticalO />
+    <CgMoreVerticalO size={30}/>
   )
 }

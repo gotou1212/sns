@@ -1,5 +1,10 @@
 import React from 'react'
 import { LikePostButton } from './LikePostButton';
+import { MessageButton } from './MessageButton';
+import { RetweetButton } from './RetweetButton';
+import { NumberOfViewsButton } from './NumberOfViewsButton';
+import { ShareButton } from './ShareButton';
+import { BookmarkPostButton } from './BookmarkPostButton';
 export const PostCard = () => {
   return (
       <div className="post-card">
@@ -23,25 +28,25 @@ export const PostCard = () => {
           <div className="post-content-buttons">
            <div className="left">
             <div className="koko">
-              <button>1</button>
+            <MessageButton />
             </div>
             <div className="2">
-            <button>2</button>
+            <RetweetButton />
             </div>
             <div className="3">
            <LikePostButton />
             </div>
             <div className="4">
-            <button>4</button>
+            <NumberOfViewsButton />
             </div>
            </div>
            <div className="right">
             <div className="button5">
-            <button>5</button>
+            <BookmarkPostButton />
             </div>
             <div className="6">
-            <button>6</button>
-            </div>
+           <ShareButton />            
+           </div>
            </div>
           </div>
         </div>

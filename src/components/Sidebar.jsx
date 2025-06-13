@@ -14,18 +14,20 @@ import { SeemoreButton } from './SeemoreButton';
 const Sidebar = () => {
     return(
           <div className='sidebar'>
-            <HomeButton />
-            <SearchButton />
-            <NotificationButton />
-            <MailButton />
-            <GrokButton />
-            <BookmarkButton />
-            <RecruitmentButton />
-            <CommunityButton />
-            <PremiumButton />
-            <VerifiedorganizationButton />
-            <ProfileButton />
-            <SeemoreButton />
+              <HomeButton />
+              <SearchButton />
+              <NotificationButton />
+              <MailButton />
+              <GrokButton />
+              <BookmarkButton />
+              <RecruitmentButton />
+              <CommunityButton />
+              <PremiumButton />
+              <VerifiedorganizationButton />
+             <div className="profile">
+              <ProfileButton />
+             </div>
+              <SeemoreButton />
           </div>
     );
 }
