@@ -2,11 +2,13 @@
     background-color: blue;
 }
 .sidebar{
-    background-color: green;
+    background-color:a;
     width:300px;
     display:flex;
     flex-direction:column;
-    padding:10px;
+    padding-top: 24px;
+    padding-left:32px;
+    padding-right:32px;
 }
 
   
@@ -18,5 +20,119 @@
     height:35px;
 }
 
+.home{
+    display:block;
+}
 
+.sidebar-header{
+    margin-bottom:24px;
+}
 
+.sidebar-menu{
+    display:flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sidebar-menu-item1{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    font-size: 24px;
+}
+
+.sidebar-post-button{
+    background-color:black;
+    margin-top: 40px;
+    color: white;
+}
+
+.sidebar-menu-item2{
+      display:flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    font-size: 24px;
+}
+
+.sidebar-menu-item3{
+      display:flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    font-size: 24px;
+}
+
+.sidebar-menu-item4{
+      display:flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    font-size: 24px;
+}
+
+.sidebar-menu-item5{
+      display:flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    font-size: 24px;
+}
+
+.sidebar-menu-item6{
+      display:flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    font-size: 24px;
+}
+
+.sidebar-menu-item7{
+      display:flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    font-size: 24px;
+}
+
+.sidebar-menu-item8{
+      display:flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    font-size: 24px;
+}
+
+.sidebar-menu-item9{
+      display:flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    font-size: 24px;
+}
+
+.sidebar-menu-item10{
+      display:flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    font-size: 24px;
+}
+
+.sidebar-menu-item11{
+      display:flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    font-size: 24px;
+}
+
+.sidebar-menu-item12{
+      display:flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    font-size: 24px;
+    margin-top:14px;
+}
