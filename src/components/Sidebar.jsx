@@ -83,7 +83,7 @@ const Sidebar = () => {
              <SidebarHeader />
              <SidebarMenu/>             
           <div className='sidebar-post-button'>
-            投稿する
+            ポストする
           </div>
           </div>
     );

@@ -46,6 +46,11 @@
     background-color:black;
     margin-top: 40px;
     color: white;
+    padding:12px;
+    border-radius: 30px;
+    text-align: center;
+    font-size:20px;
+    cursor: pointer;
 }
 
 .sidebar-menu-item2{
