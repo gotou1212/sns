@@ -8,21 +8,19 @@ export const Timeline = () => {
         <div className="kakoi1">
           <div className="timeline">timeline</div>
 
-          <button
-             onClick={() => {
-               setPosts([
-                  ...posts,
-                  {
-                    content: "Test post"
-                  }
-               ])
-             }}
-             >
-              追加</button>
-         <PostForm />
-         <PostCard />
+         <PostForm 
+        onSubmit ={(post) => {
+          setPosts([post, ...posts]);
+         }}
+         />
 
-         <div>{posts?.length}</div>
+         {posts.map((post,index) => (
+          <PostCard key={index} />
+         ))}
+
+     
+
+      
       </div>
 
       
