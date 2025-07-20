@@ -5,7 +5,9 @@ import { RetweetButton } from '../RetweetButton';
 import { NumberOfViewsButton } from '../NumberOfViewsButton';
 import { ShareButton } from '../ShareButton';
 import { BookmarkPostButton } from '../BookmarkPostButton';
-export const PostCard = () => {
+export const PostCard = ({
+  content
+}) => {
   return (
     <div className="post-card">
       <div className="post-icon-area">
@@ -23,7 +25,9 @@ export const PostCard = () => {
             <div className="">・・・</div>
           </div>
         </div>
-        <div className="post-content-main">main</div>
+        <div className="post-content-main">
+          {content}
+        </div>
         <div className="post-content-image">image</div>
         <div className="post-content-buttons">
           <div className="left">

@@ -15,7 +15,10 @@ export const Timeline = () => {
          />
 
          {posts.map((post,index) => (
-          <PostCard key={index} />
+          <PostCard 
+          key={index} 
+          content={post.content}
+          />
          ))}
 
      
