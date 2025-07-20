@@ -1,10 +1,10 @@
 import React from 'react'
-import { LikePostButton } from './LikePostButton';
-import { MessageButton } from './MessageButton';
-import { RetweetButton } from './RetweetButton';
-import { NumberOfViewsButton } from './NumberOfViewsButton';
-import { ShareButton } from './ShareButton';
-import { BookmarkPostButton } from './BookmarkPostButton';
+import { LikePostButton } from '../LikePostButton';
+import { MessageButton } from '../MessageButton';
+import { RetweetButton } from '../RetweetButton';
+import { NumberOfViewsButton } from '../NumberOfViewsButton';
+import { ShareButton } from '../ShareButton';
+import { BookmarkPostButton } from '../BookmarkPostButton';
 export const PostCard = () => {
   return (
     <div className="post-card">

@@ -1,5 +1,5 @@
 import Sidebar from "./components/Sidebar";
-import Timeline from "./components/Timeline";
+import Timeline from "./components/timeline/Timeline";
 import Suggestion from "./components/Suggestion";
 import './App.css'; 
 
