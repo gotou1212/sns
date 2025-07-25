@@ -21,6 +21,7 @@ export const PostForm = ({
             rows={3}
             value={content}
             onChange={(e) => setContent(e.target.value)}
+            maxLength={100}
             />
             <button disabled={!content} className="button" onClick={handleSubmit}>投稿</button>
             </div>

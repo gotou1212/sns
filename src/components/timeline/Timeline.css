@@ -143,4 +143,7 @@
    border-radius: 100%;
 }
 
-
+.text{
+  resize: none;
+  height: 100%;
+}
