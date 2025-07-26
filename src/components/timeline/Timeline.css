@@ -23,11 +23,12 @@
 .text {
   position: absolute;
   width: 100%;
-  
   box-sizing: border-box;
   border: none;
   background-color:aliceblue;
   outline: none;
+  resize: none;
+  height: 100%;
 }
 
 .button {
@@ -143,7 +144,3 @@
    border-radius: 100%;
 }
 
-.text{
-  resize: none;
-  height: 100%;
-}
