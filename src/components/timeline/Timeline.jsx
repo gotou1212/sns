@@ -7,7 +7,7 @@ export const Timeline = () => {
 
   useEffect(() => {
     const init = async () => {
-      const res = await fetch("http://localhost:3000/posts");
+      const res = await fetch("http://localhost:3000/posts/");  //GET method
       const data =await res.json();
       console.log(data)
       setPosts(data);
