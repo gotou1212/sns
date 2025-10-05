@@ -1,9 +1,20 @@
 import './Timeline.css'
 import { PostForm } from './PostForm';
 import { PostCard } from './PostCard';
-import {useState} from 'react';
+import { useState,useEffect} from 'react';
 export const Timeline = () => {
   const[posts,setPosts] =useState([])
+
+  useEffect(() => {
+    const init = async () => {
+      const res = await fetch("http://localhost:3000/posts");
+      const data =await res.json();
+      console.log(data)
+      setPosts(data);
+    }
+
+    init();
+  },[])
     return(
         <div className="kakoi1">
           <div className="timeline">timeline</div>
