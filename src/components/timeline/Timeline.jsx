@@ -20,7 +20,9 @@ export const Timeline = () => {
           <div className="timeline">timeline</div>
 
          <PostForm 
-        onSubmit ={(post) => {
+        onSubmit ={async(post) => {
+
+          const res = await fetch("http://localhost:3000/posts/",{ method: "POST"})
           setPosts([post, ...posts]);
          }}
          />
