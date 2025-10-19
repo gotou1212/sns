@@ -15,32 +15,29 @@ export const Timeline = () => {
 
     init();
   },[])
-    return(
-        <div className="kakoi1">
-          <div className="timeline">timeline</div>
+  return(
+    <div className="kakoi1">
+      <div className="timeline">timeline</div>
 
-         <PostForm 
+      <PostForm 
         onSubmit ={async(post) => {
 
-          const res = await fetch("http://localhost:3000/posts/",{ method: "POST"})
+          const res = await fetch(
+            "http://localhost:3000/posts/",
+            { method: "POST",body: JSON.stringify(post),headers: { "Content-type": "application/json"}}
+          );
           setPosts([post, ...posts]);
-         }}
-         />
+        }}
+      />
 
-         {posts.map((post,index) => (
-          <PostCard 
+      {posts.map((post,index) => (
+        <PostCard 
           key={index} 
           content={post.content}
-          />
-         ))}
-
-     
-
-      
-      </div>
-
-      
-    );
+        />
+      ))}
+    </div> 
+  );
 }
 
 export default Timeline;

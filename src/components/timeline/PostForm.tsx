@@ -9,6 +9,7 @@ export const PostForm = ({
       console.log("dadada")
       onSubmit({
         content: content,
+        title:"dummy"
      });
     }
   }
