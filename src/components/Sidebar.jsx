@@ -85,6 +85,8 @@ const Sidebar = () => {
           <div className='sidebar-post-button'>
             ポストする
           </div>
+
+          <a href="/login">LOGIN</a>
           </div>
     );
 }

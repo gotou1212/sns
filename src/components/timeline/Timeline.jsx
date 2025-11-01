@@ -2,12 +2,13 @@ import './Timeline.css'
 import { PostForm } from './PostForm';
 import { PostCard } from './PostCard';
 import { useState,useEffect} from 'react';
+import { API_URL}  from '../../constants';
 export const Timeline = () => {
   const[posts,setPosts] =useState([])
 
   useEffect(() => {
     const init = async () => {
-      const res = await fetch("http://localhost:3000/posts/");  //GET method
+      const res = await fetch(`${API_URL}/posts`);  //GET method
       const data =await res.json();
       console.log(data)
       setPosts(data);
@@ -23,6 +24,7 @@ export const Timeline = () => {
         onSubmit ={async(post) => {
 
           const res = await fetch(
+            `${API_URL}/posts`,
             "http://localhost:3000/posts/",
             { method: "POST",body: JSON.stringify(post),headers: { "Content-type": "application/json"}}
           );
