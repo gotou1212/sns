@@ -25,7 +25,7 @@ export const Timeline = () => {
 
           const res = await fetch(
             `${API_URL}/posts`,
-            "http://localhost:3000/posts/",
+          
             { method: "POST",body: JSON.stringify(post),headers: { "Content-type": "application/json"}}
           );
           setPosts([post, ...posts]);
