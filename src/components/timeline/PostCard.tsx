@@ -5,9 +5,16 @@ import { RetweetButton } from '../RetweetButton';
 import { NumberOfViewsButton } from '../NumberOfViewsButton';
 import { ShareButton } from '../ShareButton';
 import { BookmarkPostButton } from '../BookmarkPostButton';
+
+interface props {
+  id: number;
+  content: string;
+}
+
 export const PostCard = ({
+  id,
   content
-}) => {
+} : props) => {
   return (
     <div className="post-card">
       <div className="post-icon-area">
