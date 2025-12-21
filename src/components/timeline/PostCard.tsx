@@ -15,6 +15,12 @@ export const PostCard = ({
   id,
   content
 } : props) => {
+  const handleDelete = async () => {
+  const res = await fetch(`http://localhost:3000/posts/$(id)`,{
+    method: "DELETE",
+  });
+}
+  
   return (
     <div className="post-card">
       <div className="post-icon-area">
@@ -29,7 +35,7 @@ export const PostCard = ({
             <div className="post-content-header-time">14時間</div>
           </div>
           <div className="post-content-header-right">
-            <div className="">・・・</div>
+            <div className="" onClick={handleDelete}>・・・</div>
           </div>
         </div>
         <div className="post-content-main">
@@ -62,5 +68,4 @@ export const PostCard = ({
         </div>
       </div>
     </div>
-  )
-}
+  )};
