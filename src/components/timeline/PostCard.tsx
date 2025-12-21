@@ -9,17 +9,22 @@ import { BookmarkPostButton } from '../BookmarkPostButton';
 interface props {
   id: number;
   content: string;
+  onDelete: (id: number) => void;
 }
 
 export const PostCard = ({
   id,
-  content
+  content,
+  onDelete
 } : props) => {
   const handleDelete = async () => {
-  const res = await fetch(`http://localhost:3000/posts/$(id)`,{
-    method: "DELETE",
-  });
-}
+    const res = await fetch(`http://localhost:3000/posts/${id}`,{
+      method: "DELETE",
+    });
+    if (res.ok)(
+    onDelete(id)
+    )
+  }
   
   return (
     <div className="post-card">

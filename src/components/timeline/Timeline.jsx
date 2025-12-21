@@ -37,6 +37,9 @@ export const Timeline = () => {
           key={index} 
           id={post.id}
           content={post.content}
+          onDelete={(id) => {
+            setPosts(posts.filter((p) => p.id != id));
+          }}
         />
       ))}
     </div> 
