@@ -2,13 +2,12 @@ import './Timeline.css'
 import { PostForm } from './PostForm';
 import { PostCard } from './PostCard';
 import { useState,useEffect} from 'react';
-import { API_URL}  from '../../constants';
 export const Timeline = () => {
   const[posts,setPosts] =useState([])
 
   useEffect(() => {
     const init = async () => {
-      const res = await fetch(`${API_URL}/posts`);  //GET method
+      const res = await fetch("http://localhost:3000/posts/");  //GET method
       const data =await res.json();
       console.log(data)
       setPosts(data);
@@ -16,34 +15,32 @@ export const Timeline = () => {
 
     init();
   },[])
-  return(
-    <div className="kakoi1">
-      <div className="timeline">timeline</div>
+    return(
+        <div className="kakoi1">
+          <div className="timeline">timeline</div>
 
-      <PostForm 
+         <PostForm 
         onSubmit ={async(post) => {
 
-          const res = await fetch(
-            `${API_URL}/posts`,
-          
-            { method: "POST",body: JSON.stringify(post),headers: { "Content-type": "application/json"}}
-          );
+          const res = await fetch("http://localhost:3000/posts/",{ method: "POST"})
           setPosts([post, ...posts]);
-        }}
-      />
+         }}
+         />
 
-      {posts.map((post,index) => (
-        <PostCard 
+         {posts.map((post,index) => (
+          <PostCard 
           key={index} 
-          id={post.id}
           content={post.content}
-          onDelete={(id) => {
-            setPosts(posts.filter((p) => p.id != id));
-          }}
-        />
-      ))}
-    </div> 
-  );
+          />
+         ))}
+
+     
+
+      
+      </div>
+
+      
+    );
 }
 
 export default Timeline;
