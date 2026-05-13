@@ -86,7 +86,10 @@ const Sidebar = () => {
             ポストする
           </div>
 
-          <a href="/login">LOGIN</a>
+          <div className="login-logout-row">
+            <a href="/login" className="login-circle">ログイン</a>
+            <a href="#" className="login-circle">ログアウト</a>
+          </div>
           </div>
     );
 }

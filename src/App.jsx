@@ -10,12 +10,6 @@ const App = () => {
       <Timeline />
       <Suggestion />
     
-    <div className ='sider-post-button'> 
-    ポストする
-    </div>
-
-    <a href="/login">ログイン</a>
-    <a href="/signup">登録</a>
     </div>
   );
 }
