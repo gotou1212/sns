@@ -142,7 +142,7 @@ const LoginPage = () => {
                 </form>
 
                 <p style={{ margin: "16px 0 0 0" }}>
-                    アカウントがない場合は <Link to="/signup">新規登録</Link>
+                    アカウントがない場合は <Link to="/signup">新規登録</Link>.  
                 </p>
             </section>
         </main>
