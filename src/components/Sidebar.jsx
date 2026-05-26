@@ -1,4 +1,6 @@
 import './Sidebar.css'
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router';
 import { HomeButton } from './HomeButton';
 import { SearchButton } from './SearchButton';
 import { NotificationButton } from './NotificationButton';
@@ -78,6 +80,27 @@ const SidebarMenu = () => {
   )
 } 
 const Sidebar = () => {
+    const navigate = useNavigate();
+    const [isLoggedIn, setIsLoggedIn] = useState(() => Boolean(localStorage.getItem('token')));
+
+    useEffect(() => {
+      const handleStorageChange = () => {
+        setIsLoggedIn(Boolean(localStorage.getItem('token')));
+      };
+
+      window.addEventListener('storage', handleStorageChange);
+
+      return () => {
+        window.removeEventListener('storage', handleStorageChange);
+      };
+    }, []);
+
+    const handleLogout = () => {
+      localStorage.removeItem('token');
+      setIsLoggedIn(false);
+      navigate('/');
+    };
+
     return(
           <div className='sidebar'>
              <SidebarHeader />
@@ -87,8 +110,8 @@ const Sidebar = () => {
           </div>
 
           <div className="login-logout-row">
-            <a href="/login" className="login-circle">ログイン</a>
-            <a href="#" className="login-circle">ログアウト</a>
+            {!isLoggedIn ? <Link to="/login" className="login-circle">ログイン</Link> : null}
+            {isLoggedIn ? <button type="button" className="login-circle" onClick={handleLogout}>ログアウト</button> : null}
           </div>
           </div>
     );

@@ -55,14 +55,17 @@
     justify-content: center;
     width: 108px;
     height: 48px;
+    padding: 0;
     border-radius: 30px;
     background-color: #1d9bf0;
     color: white;
     font-size: 20px;
+    font-family: inherit;
     text-decoration: none;
     cursor: pointer;
     border: 3px solid black;
     box-shadow: 0 0 0 4px white;
+    appearance: none;
 }
 
 .sidebar-post-button{
