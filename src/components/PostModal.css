@@ -1,0 +1,81 @@
+.post-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: grid;
+  place-items: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.post-modal {
+  width: min(560px, 100%);
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+  display: grid;
+  gap: 12px;
+}
+
+.post-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.post-modal-header h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.post-modal-close {
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.post-modal-textarea {
+  width: 100%;
+  resize: vertical;
+  min-height: 120px;
+  border: 1px solid #d0d0d0;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.post-modal-error {
+  margin: 0;
+  color: #b00020;
+  font-size: 14px;
+}
+
+.post-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.post-modal-cancel,
+.post-modal-submit {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+.post-modal-cancel {
+  background: #ececec;
+}
+
+.post-modal-submit {
+  background: #1d9bf0;
+  color: #fff;
+}
+
+.post-modal-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

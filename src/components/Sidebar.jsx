@@ -13,6 +13,7 @@ import { VerifiedorganizationButton } from './VerifiedorganizationButton';
 import { ProfileButton } from './ProfileButton';
 import { SeemoreButton } from './SeemoreButton';
 import { useAuth } from '../contexts/AuthContext';
+import { usePostModal } from '../contexts/PostModalContext';
 
 
 const SidebarHeader = () => {
@@ -86,19 +87,28 @@ const SidebarMenu = ({ isLoggedIn }) => {
 const Sidebar = () => {
     const navigate = useNavigate();
     const { isLoggedIn, logout } = useAuth();
+  const { openModal } = usePostModal();
 
     const handleLogout = () => {
       logout();
       navigate('/');
     };
 
+    const handleOpenPostModal = () => {
+      if (!isLoggedIn) {
+        navigate('/login');
+        return;
+      }
+      openModal();
+    };
+
     return(
           <div className='sidebar'>
              <SidebarHeader />
              <SidebarMenu isLoggedIn={isLoggedIn} />
-          <div className='sidebar-post-button'>
+          <button type="button" className='sidebar-post-button' onClick={handleOpenPostModal}>
             ポストする
-          </div>
+          </button>
 
           <div className="login-logout-row">
             {!isLoggedIn ? <Link to="/login" className="login-circle">ログイン</Link> : null}
