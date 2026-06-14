@@ -2,8 +2,10 @@ import './Timeline.css'
 import { PostForm } from './PostForm';
 import { PostCard } from './PostCard';
 import { useState,useEffect} from 'react';
+import { useAuth } from '../../contexts/AuthContext';
 export const Timeline = () => {
   const[posts,setPosts] =useState([])
+  const { isLoggedIn } = useAuth();
 
   useEffect(() => {
     const init = async () => {
@@ -19,13 +21,15 @@ export const Timeline = () => {
         <div className="kakoi1">
           <div className="timeline">timeline</div>
 
-         <PostForm 
-        onSubmit ={async(post) => {
+         {isLoggedIn ? (
+           <PostForm
+          onSubmit ={async(post) => {
 
-          const res = await fetch("http://localhost:3000/posts/",{ method: "POST"})
-          setPosts([post, ...posts]);
-         }}
-         />
+            const res = await fetch("http://localhost:3000/posts/",{ method: "POST"})
+            setPosts([post, ...posts]);
+           }}
+           />
+         ) : null}
 
          {posts.map((post,index) => (
           <PostCard 

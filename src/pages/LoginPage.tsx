@@ -1,16 +1,19 @@
 import { useState } from "react";
+import type { FormEvent } from "react";
 import { Link, useNavigate } from "react-router";
+import { useAuth } from "../contexts/AuthContext.ts";
 
 const API_BASE_URL = "http://localhost:3000";
 
 const LoginPage = () => {
     const navigate = useNavigate();
+    const { login } = useAuth();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setError("");
 
@@ -37,7 +40,7 @@ const LoginPage = () => {
                 return;
             }
 
-            localStorage.setItem("token", data.token);
+            login(data.token);
             navigate("/");
         } catch {
             setError("サーバーに接続できませんでした。時間をおいて再度お試しください。");

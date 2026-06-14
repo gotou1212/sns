@@ -1,5 +1,4 @@
 import './Sidebar.css'
-import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { HomeButton } from './HomeButton';
 import { SearchButton } from './SearchButton';
@@ -13,6 +12,7 @@ import { PremiumButton } from './PremiumButton';
 import { VerifiedorganizationButton } from './VerifiedorganizationButton';
 import { ProfileButton } from './ProfileButton';
 import { SeemoreButton } from './SeemoreButton';
+import { useAuth } from '../contexts/AuthContext';
 
 
 const SidebarHeader = () => {
@@ -23,7 +23,7 @@ const SidebarHeader = () => {
   )
 }
 
-const SidebarMenu = () => {
+const SidebarMenu = ({ isLoggedIn }) => {
   return (
     <div className='sidebar-menu'>
       <div className='sidebar-menu-item1'>
@@ -34,77 +34,68 @@ const SidebarMenu = () => {
         <SearchButton />
         <div>Search</div>
       </div>
-      <div className='sidebar-menu-item3'>
-        <NotificationButton />
-        <div>Notification</div>
-      </div>
-      <div className='sidebar-menu-item4'>
-        <MailButton />
-        <div>Mail</div>
-        </div>     
-      <div className='sidebar-menu-item5'>
-         <GrokButton />
-         <div>Grok</div>
-      </div>
-      <div className='sidebar-menu-item6'>
-         <BookmarkButton />
-         <div>Bookmark</div>
-      </div>
-      <div className='sidebar-menu-item7'>
-         <RecruitmentButton />
-         <div>Recruitment</div>
-      </div>
-      <div className='sidebar-menu-item8'>
-           <CommunityButton />
-           <div>Community</div>
-      </div>
-      <div className='sidebar-menu-item9'>
-          <PremiumButton />
-          <div>Premium</div>
-      </div>
-      <div className='sidebar-menu-item10'>
-          <VerifiedorganizationButton />
-          <div>Verifiedorganization</div>
-      </div>
-      <div className="profile">
-        <div className='sidebar-menu-item11'>
-          <ProfileButton />
-          <div>Profile</div>
-        </div>
-        <div className='sidebar-menu-item12'>
-          <SeemoreButton /> 
-          <div>Seemore</div>
-          </div>    
-      </div>
+      {isLoggedIn ? (
+        <>
+          <div className='sidebar-menu-item3'>
+            <NotificationButton />
+            <div>Notification</div>
+          </div>
+          <div className='sidebar-menu-item4'>
+            <MailButton />
+            <div>Mail</div>
+            </div>
+          <div className='sidebar-menu-item5'>
+             <GrokButton />
+             <div>Grok</div>
+          </div>
+          <div className='sidebar-menu-item6'>
+             <BookmarkButton />
+             <div>Bookmark</div>
+          </div>
+          <div className='sidebar-menu-item7'>
+             <RecruitmentButton />
+             <div>Recruitment</div>
+          </div>
+          <div className='sidebar-menu-item8'>
+               <CommunityButton />
+               <div>Community</div>
+          </div>
+          <div className='sidebar-menu-item9'>
+              <PremiumButton />
+              <div>Premium</div>
+          </div>
+          <div className='sidebar-menu-item10'>
+              <VerifiedorganizationButton />
+              <div>Verifiedorganization</div>
+          </div>
+          <div className="profile">
+            <div className='sidebar-menu-item11'>
+              <ProfileButton />
+              <div>Profile</div>
+            </div>
+            <div className='sidebar-menu-item12'>
+              <SeemoreButton />
+              <div>Seemore</div>
+              </div>
+          </div>
+        </>
+      ) : null}
     </div>
   )
 } 
 const Sidebar = () => {
     const navigate = useNavigate();
-    const [isLoggedIn, setIsLoggedIn] = useState(() => Boolean(localStorage.getItem('token')));
-
-    useEffect(() => {
-      const handleStorageChange = () => {
-        setIsLoggedIn(Boolean(localStorage.getItem('token')));
-      };
-
-      window.addEventListener('storage', handleStorageChange);
-
-      return () => {
-        window.removeEventListener('storage', handleStorageChange);
-      };
-    }, []);
+    const { isLoggedIn, logout } = useAuth();
 
     const handleLogout = () => {
-      localStorage.removeItem('token');
-      setIsLoggedIn(false);
+      logout();
       navigate('/');
     };
 
     return(
           <div className='sidebar'>
              <SidebarHeader />
-             <SidebarMenu/>             
+             <SidebarMenu isLoggedIn={isLoggedIn} />
           <div className='sidebar-post-button'>
             ポストする
           </div>
