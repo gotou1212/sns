@@ -1,5 +1,5 @@
-
 import { useState } from "react";
+import type { FormEvent } from "react";
 import { Link, useNavigate } from "react-router";
 
 const API_BASE_URL = "http://localhost:3000";
@@ -12,7 +12,7 @@ const SignupPage = () => {
     const [message, setMessage] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setError("");
         setMessage("");

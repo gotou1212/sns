@@ -1,5 +1,5 @@
 import './Sidebar.css'
-import { Link, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { HomeButton } from './HomeButton';
 import { SearchButton } from './SearchButton';
 import { NotificationButton } from './NotificationButton';
@@ -24,7 +24,7 @@ const SidebarHeader = () => {
   )
 }
 
-const SidebarMenu = ({ isLoggedIn }) => {
+const SidebarMenu = ({ isLoggedIn, profileLinkTo }) => {
   return (
     <div className='sidebar-menu'>
       <div className='sidebar-menu-item1'>
@@ -70,10 +70,10 @@ const SidebarMenu = ({ isLoggedIn }) => {
               <div>Verifiedorganization</div>
           </div>
           <div className="profile">
-            <div className='sidebar-menu-item11'>
+            <Link to={profileLinkTo} className='sidebar-menu-item11' style={{ textDecoration: 'none', color: 'inherit' }}>
               <ProfileButton />
               <div>Profile</div>
-            </div>
+            </Link>
             <div className='sidebar-menu-item12'>
               <SeemoreButton />
               <div>Seemore</div>
@@ -86,8 +86,10 @@ const SidebarMenu = ({ isLoggedIn }) => {
 } 
 const Sidebar = () => {
     const navigate = useNavigate();
+  const location = useLocation();
     const { isLoggedIn, logout } = useAuth();
   const { openModal } = usePostModal();
+  const profileLinkTo = location.pathname === '/profile' ? '/' : '/profile';
 
     const handleLogout = () => {
       logout();
@@ -105,7 +107,7 @@ const Sidebar = () => {
     return(
           <div className='sidebar'>
              <SidebarHeader />
-             <SidebarMenu isLoggedIn={isLoggedIn} />
+             <SidebarMenu isLoggedIn={isLoggedIn} profileLinkTo={profileLinkTo} />
           <button type="button" className='sidebar-post-button' onClick={handleOpenPostModal}>
             ポストする
           </button>
