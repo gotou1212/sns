@@ -15,6 +15,35 @@
     margin-top: 20px;
     padding: 10px;
 }
+
+.feed-toggle {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-bottom: 1px solid #d3d1cb;
+  margin-top: 16px;
+}
+
+.feed-toggle-button {
+  border: none;
+  border-bottom: 3px solid transparent;
+  background-color: white;
+  padding: 16px 12px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #636363;
+  cursor: pointer;
+}
+
+.feed-toggle-button.is-active {
+  color: #111111;
+  border-bottom-color: #1d9bf0;
+}
+
+.timeline-empty-message {
+  padding: 24px 16px;
+  color: #636363;
+}
+
 .box {
   position:relative;
   height: 90px;

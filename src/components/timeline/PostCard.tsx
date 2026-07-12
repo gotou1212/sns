@@ -8,12 +8,16 @@ import { BookmarkPostButton } from '../BookmarkPostButton';
 
 interface props {
   id: number;
+  authorName?: string;
+  authorId?: number | string | null;
   content: string;
   onDelete: (id: number) => void;
 }
 
 export const PostCard = ({
   id,
+  authorName = 'Unknown User',
+  authorId = null,
   content,
   onDelete
 } : props) => {
@@ -25,6 +29,8 @@ export const PostCard = ({
     onDelete(id)
     )
   }
+
+  const displayAuthorId = authorId === null ? 'unknown' : authorId;
   
   return (
     <div className="post-card">
@@ -35,8 +41,8 @@ export const PostCard = ({
       <div className="post-content-area">
         <div className="post-content-header">
           <div className="post-content-header-left">
-            <div className="post-content-header-username">Username</div>
-            <div className="post-content-header-id">@ID</div>
+            <div className="post-content-header-username">{authorName}</div>
+            <div className="post-content-header-id">@{displayAuthorId}</div>
             <div className="post-content-header-time">14時間</div>
           </div>
           <div className="post-content-header-right">
