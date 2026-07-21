@@ -5,6 +5,7 @@ import { RetweetButton } from '../RetweetButton';
 import { NumberOfViewsButton } from '../NumberOfViewsButton';
 import { ShareButton } from '../ShareButton';
 import { BookmarkPostButton } from '../BookmarkPostButton';
+import { Link } from 'react-router';
 
 interface props {
   id: number;
@@ -21,6 +22,16 @@ export const PostCard = ({
   content,
   onDelete
 } : props) => {
+  const createFallbackHandle = (source: string) => {
+    let hash = 0;
+
+    for (let index = 0; index < source.length; index += 1) {
+      hash = (hash * 31 + source.charCodeAt(index)) % 10000;
+    }
+
+    return String(Math.abs(hash)).padStart(4, '0');
+  };
+
   const handleDelete = async () => {
     const res = await fetch(`http://localhost:3000/posts/${id}`,{
       method: "DELETE",
@@ -30,12 +41,17 @@ export const PostCard = ({
     )
   }
 
-  const displayAuthorId = authorId === null ? 'unknown' : authorId;
+  const displayAuthorId = authorId ?? createFallbackHandle(authorName);
   
   return (
     <div className="post-card">
       <div className="post-icon-area">
-        <div className="post-icon"></div>
+        <Link
+          to={`/profile?authorName=${encodeURIComponent(authorName)}&authorId=${encodeURIComponent(displayAuthorId)}`}
+          aria-label={`${authorName} のプロフィールを開く`}
+        >
+          <div className="post-icon" />
+        </Link>
       </div>
 
       <div className="post-content-area">
@@ -43,7 +59,6 @@ export const PostCard = ({
           <div className="post-content-header-left">
             <div className="post-content-header-username">{authorName}</div>
             <div className="post-content-header-id">@{displayAuthorId}</div>
-            <div className="post-content-header-time">14時間</div>
           </div>
           <div className="post-content-header-right">
             <div className="" onClick={handleDelete}>・・・</div>

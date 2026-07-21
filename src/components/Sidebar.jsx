@@ -27,10 +27,10 @@ const SidebarHeader = () => {
 const SidebarMenu = ({ isLoggedIn, profileLinkTo }) => {
   return (
     <div className='sidebar-menu'>
-      <div className='sidebar-menu-item1'>
+      <Link to='/' className='sidebar-menu-item1' style={{ textDecoration: 'none', color: 'inherit' }}>
         <HomeButton />
         <div>Home</div>
-      </div>
+      </Link>
       <div className='sidebar-menu-item2'>
         <SearchButton />
         <div>Search</div>
@@ -89,7 +89,7 @@ const Sidebar = () => {
   const location = useLocation();
     const { isLoggedIn, logout } = useAuth();
   const { openModal } = usePostModal();
-  const profileLinkTo = location.pathname === '/profile' ? '/' : '/profile';
+  const profileLinkTo = '/profile';
 
     const handleLogout = () => {
       logout();
