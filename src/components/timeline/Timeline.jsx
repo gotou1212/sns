@@ -39,7 +39,8 @@ const getPostAuthorName = (post) => (
 );
 
 const getPostAuthorId = (post) => (
-  post?.userId
+  post?.user_id
+  ?? post?.userId
   ?? post?.authorId
   ?? post?.user?.id
   ?? post?.author?.id

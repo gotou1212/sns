@@ -42,12 +42,13 @@ export const PostCard = ({
   }
 
   const displayAuthorId = authorId ?? createFallbackHandle(authorName);
+  const profileAuthorId = authorId === null ? null : String(authorId);
   
   return (
     <div className="post-card">
       <div className="post-icon-area">
         <Link
-          to={`/profile?authorName=${encodeURIComponent(authorName)}&authorId=${encodeURIComponent(displayAuthorId)}`}
+          to={profileAuthorId ? `/profile?authorId=${encodeURIComponent(profileAuthorId)}` : '/profile'}
           aria-label={`${authorName} のプロフィールを開く`}
         >
           <div className="post-icon" />

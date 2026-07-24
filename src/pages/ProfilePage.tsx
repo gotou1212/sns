@@ -9,6 +9,7 @@ type Post = {
   id: number;
   content: string;
   username?: string;
+  user_id?: number | string | null;
   authorId?: number | string | null;
   userId?: number | string | null;
   author?: {
@@ -23,6 +24,12 @@ type Post = {
   };
 };
 
+type UserProfile = {
+  id: number;
+  username?: string;
+  name?: string;
+};
+
 const getPostAuthorName = (post: Post) => (
   post?.username
   ?? post?.user?.username
@@ -33,7 +40,8 @@ const getPostAuthorName = (post: Post) => (
 );
 
 const getPostAuthorId = (post: Post) => (
-  post?.userId
+  post?.user_id
+  ?? post?.userId
   ?? post?.authorId
   ?? post?.user?.id
   ?? post?.author?.id
@@ -42,9 +50,12 @@ const getPostAuthorId = (post: Post) => (
 
 const ProfilePage = () => {
   const [posts, setPosts] = useState<Post[]>([]);
+  const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [profileError, setProfileError] = useState('');
   const [searchParams] = useSearchParams();
-  const authorName = searchParams.get('authorName') ?? 'Username';
-  const authorId = searchParams.get('authorId') ?? 'ID';
+  const authorIdParam = searchParams.get('authorId');
+  const authorId = authorIdParam ? Number(authorIdParam) : NaN;
+  const hasValidAuthorId = Number.isInteger(authorId) && authorId > 0;
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -59,17 +70,55 @@ const ProfilePage = () => {
     fetchPosts();
   }, []);
 
+  useEffect(() => {
+    if (!hasValidAuthorId) {
+      setProfile(null);
+      setProfileError('');
+      return;
+    }
+
+    const fetchUser = async () => {
+      try {
+        setProfileError('');
+        const res = await fetch(`${API_BASE_URL}/users/${authorId}`);
+
+        if (!res.ok) {
+          if (res.status === 404) {
+            setProfileError('ユーザーが見つかりません。');
+          } else if (res.status === 400) {
+            setProfileError('ユーザーIDが不正です。');
+          } else {
+            setProfileError('ユーザー情報の取得に失敗しました。');
+          }
+          setProfile(null);
+          return;
+        }
+
+        const data = await res.json();
+        setProfile(data);
+      } catch {
+        setProfile(null);
+        setProfileError('サーバーに接続できませんでした。');
+      }
+    };
+
+    fetchUser();
+  }, [authorId, hasValidAuthorId]);
+
   const handleDelete = (id: number) => {
     setPosts((prev) => prev.filter((post) => post.id !== id));
   };
 
+  const displayAuthorName = profile?.username ?? profile?.name ?? 'Unknown User';
+  const displayAuthorId = profile?.id ? String(profile.id) : (authorIdParam ?? 'ID');
+
   const visiblePosts = posts.filter((post) => {
     const postAuthorId = getPostAuthorId(post);
-    if (postAuthorId !== null && String(postAuthorId) === authorId) {
+    if (hasValidAuthorId && postAuthorId !== null && String(postAuthorId) === String(authorId)) {
       return true;
     }
 
-    return getPostAuthorName(post) === authorName;
+    return getPostAuthorName(post) === displayAuthorName;
   });
 
   return (
@@ -79,13 +128,15 @@ const ProfilePage = () => {
       <div className="profile-header">
         <div className="profile-avatar" />
         <div className="profile-info">
-          <div className="profile-username">{authorName}</div>
-          <div className="profile-id">@{authorId}</div>
+          <div className="profile-username">{displayAuthorName}</div>
+          <div className="profile-id">@{displayAuthorId}</div>
         </div>
         <div className="profile-stats">
-          <span><strong>{posts.length}</strong> 投稿</span>
+          <span><strong>{visiblePosts.length}</strong> 投稿</span>
         </div>
       </div>
+
+      {profileError ? <p>{profileError}</p> : null}
 
       <div className="profile-tabs">
         <div className="profile-tab active">投稿</div>
