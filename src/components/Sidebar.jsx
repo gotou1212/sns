@@ -87,9 +87,11 @@ const SidebarMenu = ({ isLoggedIn, profileLinkTo }) => {
 const Sidebar = () => {
     const navigate = useNavigate();
   const location = useLocation();
-    const { isLoggedIn, logout } = useAuth();
+    const { currentUserId, isLoggedIn, logout } = useAuth();
   const { openModal } = usePostModal();
-  const profileLinkTo = '/profile';
+  const profileLinkTo = currentUserId
+    ? `/profile?authorId=${encodeURIComponent(currentUserId)}`
+    : '/profile';
 
     const handleLogout = () => {
       logout();

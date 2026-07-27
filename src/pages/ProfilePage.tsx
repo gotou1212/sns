@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import { PostCard } from '../components/timeline/PostCard';
+import { useAuth } from '../contexts/AuthContext';
 import './ProfilePage.css';
 
 const API_BASE_URL = 'http://localhost:3000';
@@ -49,12 +50,14 @@ const getPostAuthorId = (post: Post) => (
 );
 
 const ProfilePage = () => {
+  const { currentUserId } = useAuth();
   const [posts, setPosts] = useState<Post[]>([]);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [profileError, setProfileError] = useState('');
   const [searchParams] = useSearchParams();
   const authorIdParam = searchParams.get('authorId');
-  const authorId = authorIdParam ? Number(authorIdParam) : NaN;
+  const effectiveAuthorIdParam = authorIdParam ?? currentUserId;
+  const authorId = effectiveAuthorIdParam ? Number(effectiveAuthorIdParam) : NaN;
   const hasValidAuthorId = Number.isInteger(authorId) && authorId > 0;
 
   useEffect(() => {
@@ -110,7 +113,7 @@ const ProfilePage = () => {
   };
 
   const displayAuthorName = profile?.username ?? profile?.name ?? 'Unknown User';
-  const displayAuthorId = profile?.id ? String(profile.id) : (authorIdParam ?? 'ID');
+  const displayAuthorId = profile?.id ? String(profile.id) : (effectiveAuthorIdParam ?? 'ID');
 
   const visiblePosts = posts.filter((post) => {
     const postAuthorId = getPostAuthorId(post);
