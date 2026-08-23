@@ -31,6 +31,13 @@ type UserProfile = {
   name?: string;
 };
 
+type FollowSummary = {
+  userId: number;
+  followersCount: number;
+  followingCount: number;
+  isFollowing: boolean;
+};
+
 const getPostAuthorName = (post: Post) => (
   post?.username
   ?? post?.user?.username
@@ -49,16 +56,24 @@ const getPostAuthorId = (post: Post) => (
   ?? null
 );
 
+const getNormalizedId = (value: number | string | null | undefined) =>
+  value === null || value === undefined ? null : String(value);
+
 const ProfilePage = () => {
-  const { currentUserId } = useAuth();
+  const { currentUserId, token } = useAuth();
   const [posts, setPosts] = useState<Post[]>([]);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [profileError, setProfileError] = useState('');
+  const [followSummary, setFollowSummary] = useState<FollowSummary | null>(null);
+  const [isFollowPending, setIsFollowPending] = useState(false);
+  const [followError, setFollowError] = useState('');
   const [searchParams] = useSearchParams();
   const authorIdParam = searchParams.get('authorId');
   const effectiveAuthorIdParam = authorIdParam ?? currentUserId;
   const authorId = effectiveAuthorIdParam ? Number(effectiveAuthorIdParam) : NaN;
   const hasValidAuthorId = Number.isInteger(authorId) && authorId > 0;
+  const isSelfProfile = Boolean(currentUserId) && hasValidAuthorId && getNormalizedId(currentUserId) === String(authorId);
+  const canShowFollowButton = Boolean(token) && hasValidAuthorId && !isSelfProfile;
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -108,6 +123,99 @@ const ProfilePage = () => {
     fetchUser();
   }, [authorId, hasValidAuthorId]);
 
+  useEffect(() => {
+    if (!canShowFollowButton) {
+      setFollowSummary(null);
+      setFollowError('');
+      return;
+    }
+
+    const fetchFollowSummary = async () => {
+      try {
+        setFollowError('');
+        const res = await fetch(`${API_BASE_URL}/users/${authorId}/follow-summary`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!res.ok) {
+          setFollowSummary(null);
+          return;
+        }
+
+        const data = await res.json();
+        setFollowSummary({
+          userId: Number(data.userId ?? authorId),
+          followersCount: Number(data.followersCount ?? 0),
+          followingCount: Number(data.followingCount ?? 0),
+          isFollowing: Boolean(data.isFollowing),
+        });
+      } catch {
+        setFollowSummary(null);
+      }
+    };
+
+    fetchFollowSummary();
+  }, [authorId, canShowFollowButton, token]);
+
+  const handleFollowToggle = async () => {
+    if (!canShowFollowButton || !authorId || !token) {
+      return;
+    }
+
+    const previousSummary = followSummary;
+    const nextIsFollowing = !(previousSummary?.isFollowing ?? false);
+    const optimisticCount = previousSummary ? previousSummary.followersCount : 0;
+
+    setIsFollowPending(true);
+    setFollowError('');
+
+    setFollowSummary((current) => (current
+      ? {
+          ...current,
+          isFollowing: nextIsFollowing,
+          followersCount: Math.max(0, current.followersCount + (nextIsFollowing ? 1 : -1)),
+        }
+      : {
+          userId: authorId,
+          followersCount: nextIsFollowing ? 1 : 0,
+          followingCount: 0,
+          isFollowing: nextIsFollowing,
+        }
+    ));
+
+    try {
+      const res = await fetch(`${API_BASE_URL}/users/${authorId}/follow`, {
+        method: nextIsFollowing ? 'POST' : 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const payload = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        setFollowSummary(previousSummary);
+        setFollowError(payload?.error ?? 'フォロー状態の更新に失敗しました。');
+        return;
+      }
+
+      setFollowSummary((current) => ({
+        userId: authorId,
+        followersCount: Number(payload.followersCount ?? current?.followersCount ?? optimisticCount),
+        followingCount: Number(payload.followingCount ?? current?.followingCount ?? 0),
+        isFollowing: Boolean(payload.isFollowing ?? nextIsFollowing),
+      }));
+    } catch {
+      setFollowSummary(previousSummary);
+      setFollowError('サーバーに接続できませんでした。');
+    } finally {
+      setIsFollowPending(false);
+    }
+  };
+
   const handleDelete = (id: number) => {
     setPosts((prev) => prev.filter((post) => post.id !== id));
   };
@@ -134,12 +242,29 @@ const ProfilePage = () => {
           <div className="profile-username">{displayAuthorName}</div>
           <div className="profile-id">@{displayAuthorId}</div>
         </div>
-        <div className="profile-stats">
-          <span><strong>{visiblePosts.length}</strong> 投稿</span>
+
+        <div className="profile-header-row">
+          <div className="profile-stats">
+            <span><strong>{visiblePosts.length}</strong> 投稿</span>
+            <span><strong>{followSummary?.followersCount ?? 0}</strong> フォロワー</span>
+            <span><strong>{followSummary?.followingCount ?? 0}</strong> フォロー中</span>
+          </div>
+
+          {canShowFollowButton ? (
+            <button
+              type="button"
+              className={followSummary?.isFollowing ? 'profile-follow-button is-following' : 'profile-follow-button'}
+              onClick={handleFollowToggle}
+              disabled={isFollowPending}
+            >
+              {isFollowPending ? '処理中...' : (followSummary?.isFollowing ? 'フォロー中' : 'フォローする')}
+            </button>
+          ) : null}
         </div>
       </div>
 
       {profileError ? <p>{profileError}</p> : null}
+      {followError ? <p className="profile-follow-error">{followError}</p> : null}
 
       <div className="profile-tabs">
         <div className="profile-tab active">投稿</div>

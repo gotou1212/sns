@@ -1,0 +1,130 @@
+# フォロー機能: データモデル設計とAPI設計
+
+## 1. 目的
+- ユーザー間のフォロー関係を管理する。
+- プロフィール画面でフォロー状態を表示し、フォロー/解除を実行できるようにする。
+- フォロワー数・フォロー数を即時表示できるようにする。
+
+## 2. データモデル設計
+
+### 2.1 エンティティ
+- users: 既存ユーザー。
+- follows: ユーザー間のフォロー関係を表す中間テーブル。
+
+### 2.2 follows テーブル定義
+
+| カラム名 | 型 | 必須 | 説明 |
+|---|---|---|---|
+| id | bigint (PK) | yes | フォロー関係ID |
+| follower_id | bigint (FK -> users.id) | yes | フォローする側のユーザーID |
+| followee_id | bigint (FK -> users.id) | yes | フォローされる側のユーザーID |
+| created_at | timestamp | yes | 作成日時 |
+
+### 2.3 制約
+- UNIQUE(follower_id, followee_id)
+	- 同じ相手を二重フォローさせない。
+- CHECK(follower_id <> followee_id)
+	- 自分自身のフォローを禁止する。
+- FK制約
+	- follower_id, followee_id ともに users.id を参照。
+
+### 2.4 インデックス
+- INDEX follows_follower_id_idx(follower_id)
+	- ログインユーザーのフォロー一覧取得を高速化。
+- INDEX follows_followee_id_idx(followee_id)
+	- 対象ユーザーのフォロワー数集計を高速化。
+
+### 2.5 返却用集約値
+- followers_count
+	- COUNT(*) WHERE followee_id = :userId
+- following_count
+	- COUNT(*) WHERE follower_id = :userId
+
+## 3. API設計
+
+### 3.1 認証方針
+- 保護APIは Authorization: Bearer <token> を必須とする。
+- リクエスト実行ユーザーはトークンから復元する。
+	- クライアント側で扱っている currentUserId と同じ意味のユーザーID。
+
+### 3.2 エンドポイント一覧
+
+#### 3.2.1 フォロー状態サマリ取得
+- Method: GET
+- Path: /users/:userId/follow-summary
+- 説明: 表示中プロフィールに対するフォロー情報を取得。
+- 認証: 必須
+
+レスポンス例 (200):
+```json
+{
+	"userId": 12,
+	"followersCount": 31,
+	"followingCount": 18,
+	"isFollowing": true
+}
+```
+
+#### 3.2.2 フォロー実行
+- Method: POST
+- Path: /users/:userId/follow
+- 説明: ログインユーザーが対象ユーザーをフォローする。
+- 認証: 必須
+- リクエストボディ: なし
+
+レスポンス例 (200):
+```json
+{
+	"ok": true,
+	"isFollowing": true,
+	"followersCount": 32
+}
+```
+
+#### 3.2.3 フォロー解除
+- Method: DELETE
+- Path: /users/:userId/follow
+- 説明: ログインユーザーが対象ユーザーのフォローを解除する。
+- 認証: 必須
+- リクエストボディ: なし
+
+レスポンス例 (200):
+```json
+{
+	"ok": true,
+	"isFollowing": false,
+	"followersCount": 31
+}
+```
+
+## 4. バリデーションとエラーハンドリング
+
+### 4.1 共通バリデーション
+- userId は正の整数。
+- 対象ユーザーが存在すること。
+- 自分自身へのフォロー操作は禁止。
+
+### 4.2 ステータスコード方針
+- 200: 成功
+- 400: userId不正、または自分自身フォロー操作
+- 401: 未認証
+- 404: 対象ユーザーが存在しない
+- 500: サーバー内部エラー
+
+### 4.3 冪等性
+- POST /follow
+	- 既にフォロー済みでも 200 を返す。
+- DELETE /follow
+	- 未フォローでも 200 を返す。
+
+## 5. クライアント実装時の注意
+- プロフィール表示対象 userId とログインユーザーIDが一致する場合はフォローボタンを表示しない。
+- 画面の体感速度向上のため、フォロー/解除は楽観更新を採用する。
+- API失敗時はロールバックして整合性を保つ。
+- ID比較は number/string 混在を想定し、文字列正規化して比較する。
+
+## 6. 将来拡張
+- フォロワー一覧API: GET /users/:userId/followers
+- フォロー一覧API: GET /users/:userId/following
+- 通知連携: フォロー時に通知イベントを発行
+- ブロック機能との整合: ブロック中ユーザーへのフォロー禁止
