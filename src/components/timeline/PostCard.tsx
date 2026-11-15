@@ -6,6 +6,7 @@ import { NumberOfViewsButton } from '../NumberOfViewsButton';
 import { ShareButton } from '../ShareButton';
 import { BookmarkPostButton } from '../BookmarkPostButton';
 import { Link } from 'react-router';
+import { useAuth } from '../../contexts/AuthContext';
 
 interface props {
   id: number;
@@ -22,6 +23,8 @@ export const PostCard = ({
   content,
   onDelete
 } : props) => {
+  const { token } = useAuth();
+
   const createFallbackHandle = (source: string) => {
     let hash = 0;
 
@@ -33,8 +36,15 @@ export const PostCard = ({
   };
 
   const handleDelete = async () => {
+    if (!token) {
+      return;
+    }
+
     const res = await fetch(`http://localhost:3000/posts/${id}`,{
       method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     if (res.ok)(
     onDelete(id)
@@ -78,7 +88,7 @@ export const PostCard = ({
               <RetweetButton />
             </div>
             <div className="3">
-              <LikePostButton />
+              <LikePostButton postId={id} />
             </div>
             <div className="4">
               <NumberOfViewsButton />
